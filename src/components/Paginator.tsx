@@ -15,6 +15,7 @@ export const Paginator = (props: Props) => {
             {iterator.map((val, index) => {
             return (
                 <span
+                    key={`pag-${index}`}
                     style={{fontWeight: currentPage === index+1? 'bold' : 'inherit'}}
                     onClick={() => props.onSelectedPage? props.onSelectedPage(index+1) : null}
                 >

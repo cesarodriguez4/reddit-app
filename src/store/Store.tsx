@@ -1,4 +1,4 @@
-import { observable, action, runInAction, configure } from 'mobx'
+import { observable, action, runInAction, configure, computed } from 'mobx'
 import { getEntries } from '../requests';
 
 configure({ enforceActions: "observed" })
@@ -26,6 +26,10 @@ class Store {
     @observable totalPages: number = 0;
 
     @observable selectedPage: number = 1;
+
+    @computed get get_entries() {
+        return this.entries.slice(this.selectedPage, this.selectedPage  + 5);
+    }
 
     @action selectEntry(entry: Entry) {
         this.selected = entry.id;

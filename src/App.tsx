@@ -11,7 +11,7 @@ import { EntryDetails } from './components/EntryDetails';
 import { Paginator } from './components/Paginator';
 
 type StoreType = {
-  entries: Array<Entry>;
+  get_entries: Array<Entry>;
   fetchEntries: () => void;
   selectEntry: (entry: Entry) => void;
   isLoading: boolean;
@@ -33,12 +33,8 @@ class App extends Component<Props> {
     this.props.store?.fetchEntries();
   }
 
-  @computed get entries() {
-    return this.props.store?.entries;
-  }
-
   @computed get details() {
-    return this.props.store?.entries.find(e => e.id === this.props.store?.selected)
+    return this.props.store?.get_entries.find(e => e.id === this.props.store?.selected)
   }
 
   handleSelectedEntry = (e: Entry) => {
@@ -49,13 +45,12 @@ class App extends Component<Props> {
     if (this.props.store?.isLoading) {
       return <div>Loading...</div>;
     }
-    console.log(this.details);
     return (
       <Div>
         <Header placeholder="Reddit's top entries"/>
         <Div bp="grid 6" className="App">
           <Div>
-            {this.entries?.map(e => <EntryItem key={e.id}  onSelectedEntry={this.handleSelectedEntry} entry={e}/>)}
+            {this.props.store?.get_entries.map(e => <EntryItem key={e.id}  onSelectedEntry={this.handleSelectedEntry} entry={e}/>)}
           </Div>
           <Div>
             <Header placeholder="Entry Details"/>
