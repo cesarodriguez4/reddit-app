@@ -21,7 +21,6 @@ export const EntryDetails = (props: Props) => {
         <Div className="entry-details">
             <div>title: {entry?.title}</div>
             <div>Author: {entry?.author}</div>
-            <div>Created: {entry?.entryDate}</div>
             <div>Number of comments: {entry?.numComments}</div>
             <div>Created: {GetTimeAgo(Number(entry?.entryDate))}</div>
             <div><button onClick={()=> openUrl(entry?.url)}>Open original post</button></div>

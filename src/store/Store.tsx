@@ -10,7 +10,7 @@ export type Entry = {
     entryDate: string;
     thumbnail: string;
     numComments: string;
-    readStatus: string;
+    readStatus: boolean;
     url: string;
 }
 
@@ -33,6 +33,7 @@ class Store {
 
     @action selectEntry(entry: Entry) {
         this.selected = entry.id;
+        this.setReadedEntry(entry);
     }
 
     @action removeAll() {
@@ -49,6 +50,16 @@ class Store {
         this.selectedPage = page;
     }
 
+    @action setReadedEntry = (entry: Entry) => {
+        const index = this.entries.indexOf(entry);
+        const newElement = {...this.entries[index]};
+        newElement.readStatus = true;
+        this.entries.splice(index, 1);
+        this.entries.splice(index, 0, newElement);
+    }
+
+
+
     @action async fetchEntries() {
         this.isLoading = true;
         try {
@@ -62,7 +73,7 @@ class Store {
                     entryDate: element.data.created,
                     thumbnail: element.data.thumbnail,
                     numComments: element.data.num_comments,
-                    readStatus: element.data.visited,
+                    readStatus: false,
                     url: element.data.permalink
                 };
                 return entry;
