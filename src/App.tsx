@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import 'blueprint-css/dist/blueprint.css';
+import { Div } from './components/BPDiv';
+import { observer, inject } from 'mobx-react';
+import {Entry} from './store/Store';
+import { observable } from 'mobx';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type Props = {
+  store?: Array<Entry>
 }
+@inject('store')
+@observer
+export class App extends Component<Props> {
+  @observable private counter: number = 0
+  render() {
+    return (
+      <Div className="App">
+        {this.counter}
+      </Div>
+    );
+  }
+}
+
 
 export default App;
