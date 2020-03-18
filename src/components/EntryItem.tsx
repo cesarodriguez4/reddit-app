@@ -6,12 +6,13 @@ import { validURL } from '../util/regex';
 
 type Props = {
   entry: Entry;
+  onSelectedEntry: (entry: Entry) => void;
 }
 
 export const EntryItem = (props: Props) => {
     const {entry} = props;
     return (
-        <Div className="entry" bp="grid">
+        <Div onClick={() => props.onSelectedEntry(entry)} className="entry" bp="grid">
             <Div bp="3">
                 {validURL(entry.thumbnail) ? <img alt={entry.title} src={entry.thumbnail} /> : null }
             </Div>

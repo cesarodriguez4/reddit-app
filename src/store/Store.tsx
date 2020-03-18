@@ -4,6 +4,7 @@ import { getEntries } from '../requests';
 configure({ enforceActions: "observed" })
 
 export type Entry = {
+    id: string;
     title: string;
     author: string;
     entryDate: string;
@@ -18,19 +19,30 @@ class Store {
 
     @observable isLoading: boolean = false;
 
+    @observable selected: string = '';
+
     @observable errorFetching: boolean = false;
 
-    @action addEntry(element: Entry) {
-        this.entries.push(element);
+    @observable totalPages: number = 0;
+
+    @observable selectedPage: number = 1;
+
+    @action selectEntry(entry: Entry) {
+        this.selected = entry.id;
     }
+
+    @action setSelectedPage = (page: number) => {
+        this.selectedPage = page;
+    }
+
     @action async fetchEntries() {
         this.isLoading = true;
         try {
             const response = await getEntries();
             const res = await response.json();
             const data: Array<Entry> = res.map((element: any) => {
-                console.log(element);
                 const entry: Entry = {
+                    id: element.data.id,
                     title: element.data.title,
                     author: element.data.author ? element.data.author : element.data.author_fullname,
                     entryDate: element.data.created,
@@ -45,6 +57,7 @@ class Store {
                 this.isLoading = false;
                 this.entries = data;
                 this.errorFetching = false;
+                this.totalPages = Math.ceil(data.length / 5); 
             });
         } catch (error) {
             runInAction(() => {
