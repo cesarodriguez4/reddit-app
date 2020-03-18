@@ -1,0 +1,1 @@
+export const getEntries = () => fetch('http://localhost:3000/entries/top');
