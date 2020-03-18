@@ -7,10 +7,39 @@
     padding: 1%;
 }
 
+.header {
+    background-color: #a52e00;
+    padding: 1%;
+    color: white;
+    font-size: 2em;
+}
+
+.rightside {
+    background-color: #f1f1f1;
+}
+
 .entry-title {
     color: #0000ff;
 }
 
 .entry img {
     width: 100%;
+}
+
+button {
+    background-color: #612b2b;
+    color: white;
+    border-radius: 2px;
+    border: none;
+}
+
+.paginator span {
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 2%;
+}
+
+.entry-details div {
+    margin-bottom: 2%;
+    margin-top: 2%;
 }

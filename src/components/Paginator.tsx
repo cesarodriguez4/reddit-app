@@ -11,7 +11,7 @@ export const Paginator = (props: Props) => {
     const {totalPages, currentPage} = props;
     const iterator = Array.from(Array(totalPages));
     return (
-        <Div bp="grid">
+        <Div className="paginator" bp="grid 2">
             {iterator.map((val, index) => {
             return (
                 <span

@@ -47,6 +47,9 @@ class App extends Component<Props> {
     this.props.store?.removeEntry(e);
   }
 
+  restoreState = () => {
+    this.props.store?.fetchEntries();
+  }
 
   render() {
     if (this.props.store?.isLoading) {
@@ -57,31 +60,34 @@ class App extends Component<Props> {
         <Header placeholder="Reddit's top entries"/>
         <Div bp="grid">
           <Div><button onClick={() => this.props.store?.removeAll()}>Remove all</button></Div>
+          <Div><button onClick={() => this.restoreState()}>Restore</button></Div>
         </Div>
         <Div bp="grid 6" className="App">
           <Div>
-            {this.props.store?.get_entries
-            .map(e => {return (
-              <EntryItem
-                key={e.id}
-                onSelectedEntry={this.handleSelectedEntry}
-                entry={e}
-                onRemovedEntry={this.handleRemovedItem}
-              />
-            )})}
+            <Paginator
+              onSelectedPage={this.props.store?.setSelectedPage}
+              currentPage={this.props.store?.selectedPage}
+              totalPages={this.props.store?.totalPages}
+            />
+            <Div>
+              {this.props.store?.get_entries
+              .map(e => {return (
+                <EntryItem
+                  key={e.id}
+                  onSelectedEntry={this.handleSelectedEntry}
+                  entry={e}
+                  onRemovedEntry={this.handleRemovedItem}
+                />
+              )})}
+            </Div>
           </Div>
-          <Div>
+          <Div className="rightside">
             <Header placeholder="Entry Details"/>
             <Div bp="grid 12">
               <EntryDetails entry={this.details} />
             </Div>
           </Div>
         </Div>
-        <Paginator
-          onSelectedPage={this.props.store?.setSelectedPage}
-          currentPage={this.props.store?.selectedPage}
-          totalPages={this.props.store?.totalPages}
-        />
       </Div>
     );
   }

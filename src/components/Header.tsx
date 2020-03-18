@@ -7,7 +7,7 @@ type Props = {
 
 export const Header = (props: Props) => {
     return (
-        <Div>
+        <Div className="header">
             {props.placeholder}
         </Div>
     );

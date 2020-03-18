@@ -30,11 +30,11 @@ export const EntryItem = (props: Props) => {
                     <Div>submitted: {GetTimeAgo(Number(entry?.entryDate))} </Div>
                     <span> by {entry.author}</span>
                 </Div>
-                <Div bp="grid 4">
+                <Div bp="grid 3">
                     <Div>
                         <span>comments: {entry.numComments}</span>
                     </Div>
-                    <Div onClick={() => props.onRemovedEntry(entry)}>Hide</Div>
+                    <button onClick={() => props.onRemovedEntry(entry)}>Hide</button>
                 </Div>
                 <Div bp="grid 12">
                     <span>Status: {entry.readStatus? 'Readed': 'Unreaded'}</span>
