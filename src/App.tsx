@@ -14,6 +14,8 @@ type StoreType = {
   get_entries: Array<Entry>;
   fetchEntries: () => void;
   selectEntry: (entry: Entry) => void;
+  removeEntry: (entry: Entry) => void;
+  removeAll: () => void;
   isLoading: boolean;
   selected: string;
   totalPages: number;
@@ -41,6 +43,11 @@ class App extends Component<Props> {
     this.props.store?.selectEntry(e);
   }
 
+  handleRemovedItem = (e: Entry) => {
+    this.props.store?.removeEntry(e);
+  }
+
+
   render() {
     if (this.props.store?.isLoading) {
       return <div>Loading...</div>;
@@ -48,13 +55,26 @@ class App extends Component<Props> {
     return (
       <Div>
         <Header placeholder="Reddit's top entries"/>
+        <Div bp="grid">
+          <Div><button onClick={() => this.props.store?.removeAll()}>Remove all</button></Div>
+        </Div>
         <Div bp="grid 6" className="App">
           <Div>
-            {this.props.store?.get_entries.map(e => <EntryItem key={e.id}  onSelectedEntry={this.handleSelectedEntry} entry={e}/>)}
+            {this.props.store?.get_entries
+            .map(e => {return (
+              <EntryItem
+                key={e.id}
+                onSelectedEntry={this.handleSelectedEntry}
+                entry={e}
+                onRemovedEntry={this.handleRemovedItem}
+              />
+            )})}
           </Div>
           <Div>
             <Header placeholder="Entry Details"/>
-            <EntryDetails entry={this.details} />
+            <Div bp="grid 12">
+              <EntryDetails entry={this.details} />
+            </Div>
           </Div>
         </Div>
         <Paginator

@@ -35,6 +35,16 @@ class Store {
         this.selected = entry.id;
     }
 
+    @action removeAll() {
+        this.entries = [];
+        this.totalPages = 0;
+    }
+
+    @action removeEntry(entry: Entry) {
+        const index = this.entries.indexOf(entry);
+        this.entries.splice(index, 1);
+    }
+
     @action setSelectedPage = (page: number) => {
         this.selectedPage = page;
     }

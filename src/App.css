@@ -4,8 +4,13 @@
     margin-bottom: 1%;
     border: 1px solid grey;
     border-radius: 5px;
+    padding: 1%;
+}
+
+.entry-title {
+    color: #0000ff;
 }
 
 .entry img {
-    width: 100px;
+    width: 100%;
 }
