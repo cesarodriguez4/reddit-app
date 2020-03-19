@@ -86,6 +86,7 @@ class Store {
             });
         } catch (error) {
             runInAction(() => {
+                this.isLoading = false;
                 this.errorFetching = true;
             });
         }

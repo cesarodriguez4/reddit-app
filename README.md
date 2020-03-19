@@ -3,6 +3,9 @@ Front end App powered by React, Typescript, Mobx and Blueprint CSS
 
 This app is complemented with a very simple Ruby on Rails api implementation who serves the [Top Entries in Reddit](https://www.reddit.com/r/all/top/)
 
+## Live Example
+[https://cesar-reddit-app.herokuapp.com/](https://cesar-reddit-app.herokuapp.com/)
+
 ## Requirements
 - npm. [Install](https://docs.npmjs.com/cli/install)
 

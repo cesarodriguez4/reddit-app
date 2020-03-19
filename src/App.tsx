@@ -17,6 +17,7 @@ type StoreType = {
   removeEntry: (entry: Entry) => void;
   removeAll: () => void;
   isLoading: boolean;
+  errorFetching: boolean;
   selected: string;
   totalPages: number;
   selectedPage: number;
@@ -52,43 +53,54 @@ class App extends Component<Props> {
   }
 
   render() {
-    if (this.props.store?.isLoading) {
-      return <div>Loading...</div>;
-    }
     return (
       <Div>
         <Header placeholder="Reddit's top entries"/>
-        <Div bp="grid 1@lg 1@md 2@sm 2">
-          <Div><button onClick={() => this.props.store?.removeAll()}>Remove all</button></Div>
-          <Div><button onClick={() => this.restoreState()}>Restore</button></Div>
-        </Div>
-        <Div bp="grid 6@lg 6@md 12@sm 12" className="App">
-          <Div>
-            <Paginator
-              onSelectedPage={this.props.store?.setSelectedPage}
-              currentPage={this.props.store?.selectedPage}
-              totalPages={this.props.store?.totalPages}
-            />
-            <Div>
-              {this.props.store?.get_entries
-              .map(e => {return (
-                <EntryItem
-                  key={e.id}
-                  onSelectedEntry={this.handleSelectedEntry}
-                  entry={e}
-                  onRemovedEntry={this.handleRemovedItem}
-                />
-              )})}
-            </Div>
-          </Div>
-          <Div className="rightside">
-            <Header placeholder="Entry Details"/>
-            <Div bp="grid 12">
-              <EntryDetails entry={this.details} />
-            </Div>
-          </Div>
-        </Div>
+        {this.renderContent()}
       </Div>
+    );
+  }
+
+  renderContent() {
+    if (this.props.store?.isLoading) {
+      return <div className="info">Loading...</div>;
+    }
+    if (this.props.store?.errorFetching) {
+      return <div className="info">Error fetching data from server</div>;
+    }
+    return (
+        <React.Fragment>
+            <Div bp="grid 1@lg 1@md 2@sm 2">
+              <Div><button onClick={() => this.props.store?.removeAll()}>Remove all</button></Div>
+              <Div><button onClick={() => this.restoreState()}>Restore</button></Div>
+            </Div>
+            <Div bp="grid 6@lg 6@md 12@sm 12" className="App">
+              <Div>
+                <Paginator
+                  onSelectedPage={this.props.store?.setSelectedPage}
+                  currentPage={this.props.store?.selectedPage}
+                  totalPages={this.props.store?.totalPages}
+                />
+                <Div>
+                  {this.props.store?.get_entries
+                  .map(e => {return (
+                    <EntryItem
+                      key={e.id}
+                      onSelectedEntry={this.handleSelectedEntry}
+                      entry={e}
+                      onRemovedEntry={this.handleRemovedItem}
+                    />
+                  )})}
+                </Div>
+              </Div>
+              <Div className="rightside">
+                <Header placeholder="Entry Details"/>
+                <Div bp="grid 12">
+                  <EntryDetails entry={this.details} />
+                </Div>
+              </Div>
+          </Div>
+        </React.Fragment>
     );
   }
 }
